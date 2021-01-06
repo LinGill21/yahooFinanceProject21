@@ -9,4 +9,4 @@ Takes in three parameter a list of tickers, start date and end date. \
 Outputs open,high,low,close,adjclose,vluume,didvends,stocksplit,200ma and symbol for the ticker in the given range \
 * opt 3: this opt uses yahoo_fin \
 takes in a list of tickers \
-outputs netIncome,operatingIncome,otherOperatingExpenses,incomeTaxExpense,totalRevenue,totaloperatingExpense,cash,totalCurrentLibilites,DivdendsPaid
+outputs netIncome, operatingIncome, otherOperatingExpenses, incomeTaxExpense, totalRevenue, totaloperatingExpense, cash, totalCurrentLibilites, DivdendsPaid
