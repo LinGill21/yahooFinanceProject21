@@ -66,6 +66,10 @@ while (opt != 0):
                 financial = get_financials(ticker, yearly=True, quarterly=False)
                 # i want data from the yearly income statement
                 yearlyIncome = financial['yearly_income_statement']
+                #To add new column copy and paste and existing column then rename the green text then the nuber at the end change to the approraite row number
+                #to find the row number type print(financial)
+
+                #this section is the grouping called yearly income
                 # net income  row 4
                 dataDF['netIncome'] = yearlyIncome.iloc[4]
                 # operating income row 8
@@ -78,19 +82,61 @@ while (opt != 0):
                 dataDF['totalRevenue'] = yearlyIncome.iloc[15]
                 # total operating expense 16
                 dataDF['totaloperatingExpense'] = yearlyIncome.iloc[16]
-                # I want data from yearly balance sheet
+
+                # this section is the grouping called yearly balnce sheet
                 yearlyBalanceSheet = financial['yearly_balance_sheet']
                 # cash row 14
                 dataDF['cash'] = yearlyBalanceSheet.iloc[14]
                 # total libailties row 15
                 dataDF['totalCurrentLibilites'] = yearlyBalanceSheet.iloc[15]
                 # long term investments row 21
-                dataDF['totalCurrentLibilites'] = yearlyBalanceSheet.iloc[21]
-                # yearly cash flow
+                dataDF['long term investments'] = yearlyBalanceSheet.iloc[21]
+
+                # this section is the grouping called yearly cah flow
                 yearlyCashFlow = financial['yearly_cash_flow']
                 # dividends paid
                 dataDF['DivdendsPaid'] = yearlyCashFlow.iloc[14]
-                # merging each indivdual dataframe into a single dataframe
+
+            # merging each indivdual dataframe into a single dataframe
+                aList.append(dataDF)
+            master = pd.concat(aList)
+            tablename = sy.lower() + ".csv"
+            master.to_csv(tablename)
+            print("COMPLETE")
+        except:
+            print("Something went wrong please try again")
+    if(opt==4):
+        sy = input("Please enter the symbol of the company you want to look up or ^GSPC for S&P 500 ")
+        symbol = sy.split(",")
+        try:
+            master = pd.DataFrame()
+            aList = []
+            for ticker in symbol:
+                dataDF = pd.DataFrame()
+                stats = get_stats(ticker)
+                # add any new columns you find the row number and change the last number in the statement
+                # payout ratio row 23
+                dataDF['payout ratio'] = stats.iloc[23]
+                #Beta row 0
+                dataDF['Beta'] = stats.iloc[0]
+                #52 week change row
+                dataDF['52 week change'] = stats.iloc[1]
+                #200 day moving avg
+                dataDF['200 day moving avg'] = stats.iloc[6]
+                #forward dividend yeild
+                dataDF['forward dividend yeild'] = stats.iloc[19]
+                #trailing dividend yeild
+                dataDF['trailing dividend yeild'] = stats.iloc[21]
+                #5 year avg dividend yeild
+                dataDF['5 year avg dividend yeild'] = stats.iloc[22]
+                #dividend date
+                dataDF['dividend date'] = stats.iloc[24]
+                #ex- dividen date
+                dataDF['EX dividend date'] = stats.iloc[25]
+                #return on equity
+                dataDF['return on equity'] = stats.iloc[33]
+                #Revenue (ttm)
+                dataDF['Revenue (ttm)'] = stats.iloc[34]
                 aList.append(dataDF)
             master = pd.concat(aList)
             tablename = sy.lower() + ".csv"
